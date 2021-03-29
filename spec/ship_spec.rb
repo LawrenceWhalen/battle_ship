@@ -15,11 +15,31 @@ RSpec.describe do
       expect(cruiser.health).to eq(3)
     end
   end
+
   describe '#sunk?' do
     it 'retuns false at initialize' do
       cruiser = Ship.new('Cruiser', 3)
 
       expect(cruiser.sunk?).to eq(false)
+    end
+    it 'returns true when health is zero' do
+      cruiser = Ship.new('Cruiser', 3)
+
+      cruiser.hit
+      cruiser.hit
+      cruiser.hit
+
+      expect(cruiser.sunk?).to eq(true)
+    end
+  end
+
+  describe '#hit' do
+    it 'makes health go down' do
+      cruiser = Ship.new("Cruiser", 3)
+
+      cruiser.hit
+
+      expect(cruiser.health).to eq(2)
     end
   end
 end
