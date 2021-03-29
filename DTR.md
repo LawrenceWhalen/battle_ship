@@ -1,65 +1,34 @@
-# DTR: Define the Relationship
-
-Use this template when conducting DTR with your project partners. *It's recommended that you copy/paste this template into your own gist each time you conduct a DTR to take notes on the conversation.*
-
-### Guiding Questions to Define The Relationship:
-
-* What are each of our learning goals for this project? What drives us in this project?
-* What is your collaboration style? How do you feel about pair programming vs. divide-and-conquer approaches?
-* How do you communicate best? How do you appreciate receiving communication from others?
-* How would you describe your work style?
-* What are each of our strengths? How can our strengths complement each other?
-* What’s gone well or poorly in your previous projects?
-* How will we set direction and make decisions as a team?
-* How will we overcome obstacles?
-* What do you need (resources, environment, communication) to do your best work?
-* What scheduling restraints do you have? What are your scheduling preferences?
-* What is your style for giving feedback? Does anything ever hold you back from giving feedback?
-* What do you identify as being your biggest strength(s) technically, as they relate to this project? Where do you feel you could use improvement in your technical skills, as they relate to this project? How can our team help support you in improving these skills?
-* What tools do you want to use to manage the project?
-* How do you want the group to solve problems when members run into issues with features of the project?
-* How do you know if a project is successful? How can we achieve that as a group?
-* How will we recognize each other's successes and celebrate them?
-
-Any additional questions that you would like to add:
-
-### Remote Work Considerations During the COVID-19 Quarantine
-* What does remote focus look like for you? (headphones, distractions minimized (tv, family stuff, etc), video on)
-* When working from the same place where you live, life can get in the way. What are some potential life things that could affect your ability to focus, and what plan can we come up with to approach those moments?
-* If we encounter issues such as power outages, Zoom difficulties, or bad wifi, what backup plans can we have in place? (This could have answers like  asking a neighbor to borrow wifi, using cellphone hotspot for internet, switching to slack or skype.
-* Pomodoro breaks are especially important for remote work and doubly so for quarantine. What should our Pom cadence look like? How will hold ourselves accountable?
-* Quarantine is tough, so it’s important to make note of our mental/emotional state when working with others. How can we make space to check in on each other’s well being, in addition to the work that needs to be done?
-
 ### Template for DTR Memo
 
-Project:
+Project: Battle Ship
 
-Group Member Names:
+Group Member Names: Dee Hill, Lawrence Whalen
 
 Goals and Expectations for the Project (What does each group member hope to get out of this project? What do we want to achieve as a team? How will we know that we're successful?):
-
+  * Developing a strong workflow. Strong completion of iteration 3. Better clean up of testing debris.
 Team strengths & collaboration styles (consider discussing your Pairin qualities here):
-
+  * Collaboration style of ping pong. Team strengths are adaptability, applying knowledge, inspirational, and strong pattern identification.
 How we can use our strengths to overcome obstacles:
-
+  * Good communication and talking through difficulties will play to our strengths when obstacles occur.
 Schedule Expectations (When are we available to work together and individually? What constraints do we have? Make sure to discuss the remote questions above in regards to this section):
-
+  * 5:00pm to 7:00pm and 8:00pm to 10:00pm. No morning work and weekends will be evaluated at end of week.
 Communication Expectations (How and often will we communicate? How do we keep lines of communication open? How will we make decisions as a team? How will we communicate about our emotional and mental well-being with each other?):
-
+  * Communication through slack and check-ins at the start of each work block.
 Abilities & Growth Expectations (Technical strengths and areas for desired improvement):
-
+  * Slower more careful variable creation. Turning a prompt into a map and then code.
 Workload Expectations (What features do we each want to work on?):
-
+  * Using Ping Pong so workload should be equal.
 Workflow Expectations (Git workflow/Tools/Code Review/Reviewing Pull Requests/Debugging and Problem-solving Techniques):
-
+  * Navigator developes test, and then the writer creates code to pass the test. Writer creates next test and pushes to git with pull request.
 Pomodoro Break Schedule:
-
+  * 30 on 5 off
 Expectations for giving and receiving feedback:
-
+  * Honesty and respect. Feedback can be delivered through any form.
 Additional Remote Considerations:
-
+  * Respect of privacy if needed.
 Project management tools we will use (GitHub projects or Trello are popular tools):
+  * Github
 
 Day 1 Agenda:
-
+  * Talk through and plan out Class for setup and iterations.
 Additional Notes:
