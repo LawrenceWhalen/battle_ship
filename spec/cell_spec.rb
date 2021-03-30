@@ -86,7 +86,15 @@ RSpec.describe do
 
       expect(cell_2.render).to eq('.')
     end
+    it 'returns S when a ship is in the cell and optional argument is true' do
+      cell_2 = Cell.new('A1')
+      cruiser = Ship.new('Cruiser', 3)
 
+      cell_2.place_ship(cruiser)
+
+      actual = cell_2.render(true)
+      expect(actual).to eq('S')    
+    end
   end
 
 end

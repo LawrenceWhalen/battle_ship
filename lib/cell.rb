@@ -29,13 +29,15 @@ class Cell
     end
   end
 
-  def render
-    if @fired_on == false
+  def render(optional = false)
+    if @fired_on == false && optional == false
+      '.'
+    elsif @fired_on == false && @ship == nil && optional == true
       '.'
     elsif @fired_on == true && @ship == nil
       'M'
-    else
-
+    elsif @fired_on == false && @ship != nil && optional == true
+      'S'
     end
   end
 end
