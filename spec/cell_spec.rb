@@ -66,7 +66,7 @@ RSpec.describe do
     end
   end
   describe '#render' do
-    it 'retuns a period if the cell has not been fired upon and does not contain a ship' do
+    it 'retuns a . if the cell has not been fired upon and does not contain a ship' do
       cell_1 = Cell.new('A1')
 
       expect(cell_1.render).to eq('.')
@@ -78,7 +78,7 @@ RSpec.describe do
 
       expect(cell_1.render).to eq('M')
     end
-    it 'returns H if the cell has been fired upon and contains a ship' do
+    it 'returns . if the cell has not been fired upon and contains a ship' do
       cell_2 = Cell.new('A1')
       cruiser = Ship.new('Cruiser', 3)
 
@@ -86,6 +86,7 @@ RSpec.describe do
 
       expect(cell_2.render).to eq('.')
     end
+
   end
 
 end
