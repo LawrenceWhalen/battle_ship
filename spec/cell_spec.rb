@@ -65,4 +65,27 @@ RSpec.describe do
       expect(cruiser.health).to eq(2)
     end
   end
+  describe '#render' do
+    it 'retuns a period if the cell has not been fired upon and does not contain a ship' do
+      cell_1 = Cell.new('A1')
+
+      expect(cell_1.render).to eq('.')
+    end
+    it 'returns M if the cell has been fired_upon and does not contain a ship' do
+      cell_1 = Cell.new('A1')
+
+      cell_1.fire_upon
+
+      expect(cell_1.render).to eq('M')
+    end
+    it 'returns H if the cell has been fired upon and contains a ship' do
+      cell_2 = Cell.new('A1')
+      cruiser = Ship.new('Cruiser', 3)
+
+      cell_2.place_ship(cruiser)
+
+      expect(cell_2.render).to eq('.')
+    end
+  end
+
 end
