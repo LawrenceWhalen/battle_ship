@@ -93,7 +93,27 @@ RSpec.describe do
       cell_2.place_ship(cruiser)
 
       actual = cell_2.render(true)
-      expect(actual).to eq('S')    
+      expect(actual).to eq('S')
+    end
+    it 'returns H if the cell has been fired upon and contains a ship' do
+      cell_2 = Cell.new('A1')
+      cruiser = Ship.new('Cruiser', 3)
+
+      cell_2.place_ship(cruiser)
+      cell_2.fire_upon
+
+      expect(cell_2.render).to eq('H')
+    end
+    it 'returns X if has been fired upon and the ship and the ship has been sunk' do
+      cell_2 = Cell.new('A1')
+      cruiser = Ship.new('Cruiser', 3)
+
+      cell_2.place_ship(cruiser)
+      cell_2.fire_upon
+      cruiser.hit
+      cruiser.hit
+
+      expect(cell_2.render).to eq('X')
     end
   end
 

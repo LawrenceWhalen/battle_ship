@@ -32,12 +32,16 @@ class Cell
   def render(optional = false)
     if @fired_on == false && optional == false
       '.'
-    elsif @fired_on == false && @ship == nil && optional == true
-      '.'
     elsif @fired_on == true && @ship == nil
       'M'
+    elsif @fired_on == false && @ship == nil && optional == true
+      '.'
     elsif @fired_on == false && @ship != nil && optional == true
       'S'
+    elsif @fired_on == true && @ship != nil && @ship.sunk? == false
+      'H'
+    elsif @fired_on == true && @ship != nil && @ship.sunk? == true
+      'X'
     end
   end
 end
