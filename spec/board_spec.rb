@@ -35,4 +35,20 @@ RSpec.describe do
       expect(cell_hash["A1"]).to be_instance_of(Cell)
     end
   end
+  describe '#valid_coordinate?' do
+    it 'can tell that the coordinate is valid' do
+      board = Board.new
+
+      actual = board.valid_coordinate?("A1")
+
+      expect(actual).to be(true)
+    end
+    it 'can tell the coordinate is invalid' do
+      board = Board.new
+
+      actual = board.valid_coordinate?("A11")
+
+      expect(actual).to be(false)
+    end
+  end
 end
