@@ -26,5 +26,13 @@ RSpec.describe do
       expect(cell_hash.keys.count).to eq(16)
       expect(cell_hash.values.count).to eq(16)
     end
+
+    it 'has keys that point to cell objects' do
+      board = Board.new
+
+      cell_hash = board.cells
+
+      expect(cell_hash["A1"]).to be_instance_of(Cell)
+    end
   end
 end
