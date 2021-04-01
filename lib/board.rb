@@ -31,22 +31,33 @@ class Board
   def valid_placement?(ship, coordinate_array)
     ship.length == coordinate_array.count
     known_array = Array.new(coordinate_array.count){ |i| i + 1 }
-    number_array = []
-    letter_array = []
-    coordinate_array.each do |coordinate|
-      split_coorddinate = coordinate.scan(/./)
-      letter_array.push(split_coorddinate[0])
-      number_array.push(split_coorddinate[1])
-    end
-    number_array_alpha = convert_string_array(letter_array)
-    number_array_numeric = convert_string_array(number_array)
-    offset = number_array_alpha[0] - 1
-    offset_array_alpha = number_array_alpha.map do |number|
-      number - offset
-    end
+
+    string_array_alpha = coordinate_seperator(coordinate_array, 0)
+    number_array_alpha = convert_string_array(string_array_alpha)
+    normal_array_alpha = normalize_array(number_array_alpha)
+
+    string_array_numeric = coordinate_seperator(coordinate_array, 1)
+    number_array_numeric = convert_string_array(string_array_numeric)
+    normal_array_numeric = normalize_array(number_array_numeric)
 
     binding.pry
     # offest_array_alpha == known_array
+  end
+
+  def coordinate_seperator(coordinate_combined, index)
+    coordinate_seperated = []
+    coordinate_combined.map do |coordinate|
+      split_coordinate = coordinate.scan(/./)
+      coordinate_seperated.push(split_coordinate[index])
+    end
+    coordinate_seperated
+  end
+
+  def normalize_array(array_normalize)
+    offset = array_normalize[0] - 1
+    offset_array_alpha = array_normalize.map do |number|
+      number - offset
+    end
   end
 
   def convert_string_array(passed_array)
