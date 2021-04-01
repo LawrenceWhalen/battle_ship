@@ -1,3 +1,5 @@
+require 'pry'
+
 class Board
   attr_reader :cells
 
@@ -28,5 +30,38 @@ class Board
 
   def valid_placement?(ship, coordinate_array)
     ship.length == coordinate_array.count
+    known_array = Array.new(coordinate_array.count){ |i| i + 1 }
+    number_array = []
+    letter_array = []
+    coordinate_array.each do |coordinate|
+      split_coorddinate = coordinate.scan(/./)
+      letter_array.push(split_coorddinate[0])
+      number_array.push(split_coorddinate[1])
+    end
+    number_array_alpha = convert_string_array(letter_array)
+    number_array_numeric = convert_string_array(number_array)
+    offset = number_array_alpha[0] - 1
+    offset_array_alpha = number_array_alpha.map do |number|
+      number - offset
+    end
+
+    binding.pry
+    # offest_array_alpha == known_array
+  end
+
+  def convert_string_array(passed_array)
+    converted_characters = []
+    passed_array.each do |character|
+      if character == 'A' || character == '1'
+        converted_characters.push(1)
+      elsif character == 'B' || character =='2'
+        converted_characters.push(2)
+      elsif character == 'C' || character == '3'
+        converted_characters.push(3)
+      elsif character == 'D' || character == '4'
+        converted_characters.push(4)
+      end
+    end
+    converted_characters
   end
 end

@@ -10,7 +10,6 @@ class Cell
     @fired_on = false
   end
 
-  # Boolean retured based if cell is empty
   def empty?
     # Checks if @ship is nil
     @ship == nil
@@ -55,7 +54,7 @@ class Cell
     # returns H string if fired_on is true & cell is not empty & and ship in the cell has not sunk
     elsif @fired_on == true && @ship != nil && @ship.sunk? == false
       'H'
-    # returns X string if cell is fired at & cell is not empty & and the ship in the cell has sunk     
+    # returns X string if cell is fired at & cell is not empty & and the ship in the cell has sunk
     elsif @fired_on == true && @ship != nil && @ship.sunk? == true
       'X'
     end

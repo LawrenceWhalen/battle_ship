@@ -64,7 +64,15 @@ RSpec.describe do
       board = Board.new
       ship = Ship.new("Submarine", 2)
 
-      actual = board.valid_placement?(ship, ["A1", "A2", "A3"])
+      actual = board.valid_placement?(ship, ["A2", "A3", "A2"])
+
+      expect(actual).to eq(false)
+    end
+    it 'can tell if coordinates are consecutive' do
+      board = Board.new
+      ship = Ship.new("Submarine", 2)
+
+      actual = board.valid_placement?(ship, ['A1', 'A3'])
 
       expect(actual).to eq(false)
     end
