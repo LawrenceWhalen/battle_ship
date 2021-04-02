@@ -52,8 +52,10 @@ class Board
     end
   end
 
-  def place(ship, cells)
-    
+  def place(ship, place_cells)
+    if valid_placement?(ship, place_cells)
+      place_cells.map { |coordinate| @cells[coordinate].place_ship(ship) }
+    end
   end
 
   def coordinate_seperator(coordinate_combined, index)
