@@ -124,4 +124,24 @@ RSpec.describe do
       expect(cell_3.ship).to eq(cruiser)
     end
   end
+  describe '#render' do
+    it 'displays the results of cell.render on all' do
+      board = Board.new
+      cruiser = Ship.new('Cruiser', 3)
+
+      board.place(cruiser, ['A1', 'A2', 'A3'])
+      actual = board.render
+
+      expect(actual).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+    end
+    it 'displays hidden ships when passed true' do
+      board = Board.new
+      cruiser = Ship.new('Cruiser', 3)
+
+      board.place(cruiser, ['A1', 'A2', 'A3'])
+      actual = board.render(true)
+
+      expect(actual).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+    end
+  end
 end
