@@ -40,15 +40,19 @@ class Board
     number_array_numeric = convert_string_array(string_array_numeric)
     normal_array_numeric = normalize_array(number_array_numeric)
 
+    truth_array = overlap(coordinate_array)
+
 
     if normal_array_alpha.uniq.count != 1 && normal_array_numeric.uniq.count != 1
-        false
+      false
     elsif normal_array_alpha != known_array && normal_array_numeric != known_array
-        false
+      false
     elsif ship.length != coordinate_array.count
-        false
+      false
+    elsif truth_array.include?(false)
+      false
     else
-        true
+      true
     end
   end
 
@@ -88,5 +92,11 @@ class Board
       end
     end
     converted_characters
+  end
+
+  def overlap(coordinate_array)
+    coordinate_array.map do |coordinate|
+       @cells[coordinate].empty?
+    end
   end
 end
