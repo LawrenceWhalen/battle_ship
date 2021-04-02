@@ -62,6 +62,10 @@ class Board
     end
   end
 
+  def render(optional = false)
+    "  1 2 3 4 \nA #{@cells['A1'].render(optional)} #{@cells['A2'].render(optional)} #{@cells['A3'].render(optional)} #{@cells['A4'].render(optional)} \nB #{@cells['B1'].render(optional)} #{@cells['B2'].render(optional)} #{@cells['B3'].render(optional)} #{@cells['B4'].render(optional)} \nC #{@cells['C1'].render(optional)} #{@cells['C2'].render(optional)} #{@cells['C3'].render(optional)} #{@cells['C4'].render(optional)} \nD #{@cells['D1'].render(optional)} #{@cells['D2'].render(optional)} #{@cells['D3'].render(optional)} #{@cells['D4'].render(optional)} \n"
+  end
+
   def coordinate_seperator(coordinate_combined, index)
     coordinate_seperated = []
     coordinate_combined.map do |coordinate|
