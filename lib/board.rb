@@ -50,7 +50,10 @@ class Board
     else
         true
     end
+  end
 
+  def place(ship, cells)
+    
   end
 
   def coordinate_seperator(coordinate_combined, index)

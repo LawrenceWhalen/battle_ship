@@ -85,4 +85,19 @@ RSpec.describe do
       expect(actual).to eq(false)
     end
   end
+  describe '#place' do
+    it 'places ships in a cell' do
+      board = Board.new
+      cruiser = Ship.new('Cruiser', 3)
+
+      board.place(cruiser, ['A1', 'A2', 'A3'])
+
+      cell_1 = board.cells['A1']
+      cell_2 = board.cells['A2']
+      cell_3 = board.cells['A3']
+
+      actual = cell_1.ship == cell_2.ship
+      expect(actual).to eq(true)
+    end
+  end
 end
