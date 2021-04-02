@@ -1,3 +1,5 @@
+require 'pry'
+
 class Board
   attr_reader :cells
 
@@ -24,5 +26,62 @@ class Board
 
   def valid_coordinate?(coordinate)
     @cells.keys.include?(coordinate)
+  end
+
+  def valid_placement?(ship, coordinate_array)
+    ship.length == coordinate_array.count
+    known_array = Array.new(coordinate_array.count){ |i| i + 1 }
+
+    string_array_alpha = coordinate_seperator(coordinate_array, 0)
+    number_array_alpha = convert_string_array(string_array_alpha)
+    normal_array_alpha = normalize_array(number_array_alpha)
+
+    string_array_numeric = coordinate_seperator(coordinate_array, 1)
+    number_array_numeric = convert_string_array(string_array_numeric)
+    normal_array_numeric = normalize_array(number_array_numeric)
+
+
+    if normal_array_alpha.uniq.count != 1 && normal_array_numeric.uniq.count != 1
+        false
+    elsif normal_array_alpha != known_array && normal_array_numeric != known_array
+        false
+    elsif ship.length != coordinate_array.count
+        false
+    else
+        true
+    end
+
+  end
+
+  def coordinate_seperator(coordinate_combined, index)
+    coordinate_seperated = []
+    coordinate_combined.map do |coordinate|
+      split_coordinate = coordinate.scan(/./)
+      coordinate_seperated.push(split_coordinate[index])
+    end
+    coordinate_seperated
+  end
+
+  def normalize_array(array_normalize)
+    offset = array_normalize[0] - 1
+    offset_array_alpha = array_normalize.map do |number|
+      number - offset
+    end
+  end
+
+  def convert_string_array(passed_array)
+    converted_characters = []
+    passed_array.each do |character|
+      if character == 'A' || character == '1'
+        converted_characters.push(1)
+      elsif character == 'B' || character =='2'
+        converted_characters.push(2)
+      elsif character == 'C' || character == '3'
+        converted_characters.push(3)
+      elsif character == 'D' || character == '4'
+        converted_characters.push(4)
+      end
+    end
+    converted_characters
   end
 end

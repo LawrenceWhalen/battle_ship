@@ -51,4 +51,38 @@ RSpec.describe do
       expect(actual).to be(false)
     end
   end
+  describe '#valid_placement?' do
+    it 'checks ship length' do
+        board = Board.new
+        ship = Ship.new("Cruiser", 3)
+
+        actual = board.valid_placement?(ship, ["A1", "A2", "A3"])
+
+        expect(actual).to eq(true)
+    end
+    it 'can tell if placement is wrong length' do
+      board = Board.new
+      ship = Ship.new("Submarine", 2)
+
+      actual = board.valid_placement?(ship, ["A2", "A3", "A2"])
+
+      expect(actual).to eq(false)
+    end
+    it 'can tell if coordinates are consecutive' do
+      board = Board.new
+      ship = Ship.new("Submarine", 2)
+
+      actual = board.valid_placement?(ship, ['A1', 'A3'])
+
+      expect(actual).to eq(false)
+    end
+    it 'wont pass diagonal cells' do
+      board = Board.new
+      ship = Ship.new("Submarine", 2)
+
+      actual = board.valid_placement?(ship, ['A1', 'B2'])
+
+      expect(actual).to eq(false)
+    end
+  end
 end
