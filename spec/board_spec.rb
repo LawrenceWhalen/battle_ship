@@ -84,5 +84,44 @@ RSpec.describe do
 
       expect(actual).to eq(false)
     end
+    it 'does not let ships overlap' do
+      board = Board.new
+      ship = Ship.new("Submarine", 2)
+      ship_2 = Ship.new('Cruiser', 3)
+
+      board.place(ship, ['A1', 'A2'])
+
+      actual = board.valid_placement?(ship_2, ['A1', 'B1', 'C1'])
+      expect(actual).to eq(false)
+    end
+  end
+  describe '#place' do
+    it 'places the same ship in the cells' do
+      board = Board.new
+      cruiser = Ship.new('Cruiser', 3)
+
+      board.place(cruiser, ['A1', 'A2', 'A3'])
+
+      cell_1 = board.cells['A1']
+      cell_2 = board.cells['A2']
+      cell_3 = board.cells['A3']
+
+      actual = cell_1.ship == cell_2.ship
+      expect(actual).to eq(true)
+    end
+    it 'places a ship in a cell' do
+      board = Board.new
+      cruiser = Ship.new('Cruiser', 3)
+
+      board.place(cruiser, ['A1', 'A2', 'A3'])
+
+      cell_1 = board.cells['A1']
+      cell_2 = board.cells['A2']
+      cell_3 = board.cells['A3']
+
+      expect(cell_1.ship).to eq(cruiser)
+      expect(cell_2.ship).to eq(cruiser)
+      expect(cell_3.ship).to eq(cruiser)
+    end
   end
 end
