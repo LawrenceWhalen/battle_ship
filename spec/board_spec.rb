@@ -76,5 +76,13 @@ RSpec.describe do
 
       expect(actual).to eq(false)
     end
+    it 'wont pass diagonal cells' do
+      board = Board.new
+      ship = Ship.new("Submarine", 2)
+
+      actual = board.valid_placement?(ship, ['A1', 'B2'])
+
+      expect(actual).to eq(false)
+    end
   end
 end

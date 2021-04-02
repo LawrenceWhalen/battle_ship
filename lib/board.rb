@@ -40,8 +40,17 @@ class Board
     number_array_numeric = convert_string_array(string_array_numeric)
     normal_array_numeric = normalize_array(number_array_numeric)
 
-    binding.pry
-    # offest_array_alpha == known_array
+
+    if normal_array_alpha.uniq.count != 1 && normal_array_numeric.uniq.count != 1
+        false
+    elsif normal_array_alpha != known_array && normal_array_numeric != known_array
+        false
+    elsif ship.length != coordinate_array.count
+        false
+    else
+        true
+    end
+
   end
 
   def coordinate_seperator(coordinate_combined, index)
