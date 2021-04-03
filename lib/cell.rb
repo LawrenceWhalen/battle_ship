@@ -11,7 +11,6 @@ class Cell
   end
 
   def empty?
-    # Checks if @ship is nil
     @ship == nil
   end
 

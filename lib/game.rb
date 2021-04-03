@@ -38,8 +38,8 @@ class Game
   end
 
   def game_setup
-    # player_ship_placement
     computer_ship_placement
+    player_ship_placement
   end
 
   def player_ship_placement
@@ -83,14 +83,15 @@ class Game
          char.chr + collum.to_s
        end
      else
-       (1..4).each_cons(ship.length) {|array| ships_arrays.push(array)}
-       collum = rand(65..68)
-       row = ships_arrays.sample
-       final_array = row.map do |char|
-         char.to_s + collum.chr
-       end
+      (1..4).each_cons(ship.length) {|array| ships_arrays.push(array)}
+      collum = rand(65..68)
+      row = ships_arrays.sample
+      final_array = row.map do |char|
+        collum.chr + char.to_s
+      end
      end
   end
+
   def computer_ship_placement
     placement_array = computer_ship_coordinate(@computer_cruiser)
     @computer_board.place(@computer_cruiser, placement_array)
@@ -99,6 +100,5 @@ class Game
       submarine_placement_array = computer_ship_coordinate(@computer_submarine)
     end
     @computer_board.place(@computer_submarine, submarine_placement_array)
-    puts @computer_board.render(true)
   end
 end
