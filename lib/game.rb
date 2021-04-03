@@ -38,6 +38,7 @@ class Game
   end
 
   def game_setup
+    computer_ship_placement
     player_ship_placement
   end
 
@@ -70,18 +71,34 @@ class Game
     gets.chomp
   end
 
-  # def computer_ship_placement(ship)
-  #    ships_arrays = []
-  #    final_array = []
-  #    die_roll = 1
-  #    if die_roll = 1
-  #     (65..68).each_cons(ship.length) {|array| ships_arrays.push(array)}
-  #     collum = rand(1..4)
-  #     row = ships_arrays.sample
-  #     final_array = row.map do |char|
-  #       char.chr + collum.to_s
-  #     end
-  #   end
-  #   puts final_array
-  # end
+  def computer_ship_coordinate(ship)
+     ships_arrays = []
+     final_array = []
+     die_roll = rand(1..2)
+     if die_roll == 1
+       (65..68).each_cons(ship.length) {|array| ships_arrays.push(array)}
+       collum = rand(1..4)
+       row = ships_arrays.sample
+       final_array = row.map do |char|
+         char.chr + collum.to_s
+       end
+     else
+      (1..4).each_cons(ship.length) {|array| ships_arrays.push(array)}
+      collum = rand(65..68)
+      row = ships_arrays.sample
+      final_array = row.map do |char|
+        collum.chr + char.to_s
+      end
+     end
+  end
+
+  def computer_ship_placement
+    placement_array = computer_ship_coordinate(@computer_cruiser)
+    @computer_board.place(@computer_cruiser, placement_array)
+    submarine_placement_array = computer_ship_coordinate(@computer_submarine)
+    while @computer_board.valid_placement?(@computer_submarine, submarine_placement_array) == false
+      submarine_placement_array = computer_ship_coordinate(@computer_submarine)
+    end
+    @computer_board.place(@computer_submarine, submarine_placement_array)
+  end
 end

@@ -29,25 +29,24 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
-    ship.length == coordinate_array.count
-    known_array = Array.new(coordinate_array.count){ |i| i + 1 }
+    coordinate_test_array = coordinate_array
+    truth_array = overlap(coordinate_test_array)
+    ship.length == coordinate_test_array.count
+    known_array = Array.new(coordinate_test_array.count){ |i| i + 1 }
 
-    string_array_alpha = coordinate_seperator(coordinate_array, 0)
+    string_array_alpha = coordinate_seperator(coordinate_test_array, 0)
     number_array_alpha = convert_string_array(string_array_alpha)
     normal_array_alpha = normalize_array(number_array_alpha)
 
-    string_array_numeric = coordinate_seperator(coordinate_array, 1)
+    string_array_numeric = coordinate_seperator(coordinate_test_array, 1)
     number_array_numeric = convert_string_array(string_array_numeric)
     normal_array_numeric = normalize_array(number_array_numeric)
-
-    truth_array = overlap(coordinate_array)
-
 
     if normal_array_alpha.uniq.count != 1 && normal_array_numeric.uniq.count != 1
       false
     elsif normal_array_alpha != known_array && normal_array_numeric != known_array
       false
-    elsif ship.length != coordinate_array.count
+    elsif ship.length != coordinate_test_array.count
       false
     elsif truth_array.include?(false)
       false
@@ -99,8 +98,8 @@ class Board
   end
 
   def overlap(coordinate_array_overlap)
-    coordinate_array_overlap.map do |coordinate|
-       @cells[coordinate].empty?
+    coordinate_array_overlap.map do |coordinate_test_truthy|
+      @cells[coordinate_test_truthy].empty?
     end
   end
 end
