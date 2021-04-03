@@ -98,8 +98,8 @@ class Board
     converted_characters
   end
 
-  def overlap(coordinate_array)
-    coordinate_array.map do |coordinate|
+  def overlap(coordinate_array_overlap)
+    coordinate_array_overlap.map do |coordinate|
        @cells[coordinate].empty?
     end
   end

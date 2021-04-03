@@ -30,10 +30,26 @@ class Game
     player_cruiser = Ship.new('Cruiser', 3)
     player_board = Board.new
 
-    
+    computer_ship_placement(player_cruiser)
+    puts player_board.render
   end
 
   def input
     gets.chomp
+  end
+
+  def computer_ship_placement(ship)
+     ships_arrays = []
+     final_array = []
+     die_roll = 1
+     if die_roll = 1
+      (65..68).each_cons(ship.length) {|array| ships_arrays.push(array)}
+      collum = rand(1..4)
+      row = ships_arrays.sample
+      final_array = row.map do |char|
+        char.chr + collum.to_s
+      end
+    end
+    puts final_array
   end
 end
