@@ -3,6 +3,12 @@ require './lib/board'
 require './lib/cell'
 
 class Game
+  attr_reader :computer_submarine,
+              :computer_cruiser,
+              :computer_board,
+              :player_submarine,
+              :player_cruiser,
+              :player_board
 
   def start
     puts "Welcome to BATTLESHIP"
@@ -21,35 +27,61 @@ class Game
     end
   end
 
+  def initialize
+    @computer_submarine = Ship.new('Submarine', 2)
+    @computer_cruiser = Ship.new('Cruiser', 3)
+    @computer_board = Board.new
+
+    @player_submarine = Ship.new('Submarine', 2)
+    @player_cruiser = Ship.new('Cruiser', 3)
+    @player_board = Board.new
+  end
+
   def game_setup
-    computer_submarine = Ship.new('Submarine', 2)
-    computer_cruiser = Ship.new('Cruiser', 3)
-    computer_board = Board.new
+    player_ship_placement
+  end
 
-    player_submarine = Ship.new('Submarine', 2)
-    player_cruiser = Ship.new('Cruiser', 3)
-    player_board = Board.new
-
-    computer_ship_placement(player_cruiser)
-    puts player_board.render
+  def player_ship_placement
+    puts "I have laid out my ships on the grid."
+    puts "You now need to lay out your two ships."
+    puts "The Cruiser is three units long and the Submarine is two units long."
+    puts @player_board.render(true)
+    puts 'Enter the squares for the Cruiser (3 spaces):'
+    player_cruiser_input = input.split(' ').to_a
+    while @player_board.valid_placement?(@player_cruiser, player_cruiser_input) == false
+      puts 'ERROR: Enter the squares for the Cruiser (3 spaces):'
+      puts @player_board.render(true)
+      player_cruiser_input = input.split(' ').to_a
+    end
+    @player_board.place(@player_cruiser, player_cruiser_input)
+    puts @player_board.render(true)
+    puts 'Enter the squares for the Submarine (2 spaces):'
+    player_submarine_input = input.split(' ').to_a
+    while @player_board.valid_placement?(@player_submarine, player_submarine_input) == false
+      puts 'ERROR: Enter the squares for the Cruiser (3 spaces):'
+      puts @player_board.render(true)
+      player_submarine_input = input.split(' ').to_a
+    end
+    @player_board.place(@player_submarine, player_submarine_input)
+    puts @player_board.render(true)
   end
 
   def input
     gets.chomp
   end
 
-  def computer_ship_placement(ship)
-     ships_arrays = []
-     final_array = []
-     die_roll = 1
-     if die_roll = 1
-      (65..68).each_cons(ship.length) {|array| ships_arrays.push(array)}
-      collum = rand(1..4)
-      row = ships_arrays.sample
-      final_array = row.map do |char|
-        char.chr + collum.to_s
-      end
-    end
-    puts final_array
-  end
+  # def computer_ship_placement(ship)
+  #    ships_arrays = []
+  #    final_array = []
+  #    die_roll = 1
+  #    if die_roll = 1
+  #     (65..68).each_cons(ship.length) {|array| ships_arrays.push(array)}
+  #     collum = rand(1..4)
+  #     row = ships_arrays.sample
+  #     final_array = row.map do |char|
+  #       char.chr + collum.to_s
+  #     end
+  #   end
+  #   puts final_array
+  # end
 end
