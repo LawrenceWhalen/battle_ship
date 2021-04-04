@@ -1,7 +1,7 @@
-require './lib/ship'
-require './lib/board'
-require './lib/cell'
-require './lib/game'
+require "./lib/ship"
+require "./lib/board"
+require "./lib/cell"
+require "./lib/game"
 
 class Turn
   attr_reader :player_board,
@@ -13,34 +13,36 @@ class Turn
   end
 
   def start_turn
-    puts '=============COMPUTER BOARD============='
+    puts "=============COMPUTER BOARD============="
     puts @computer_board.render
-    puts '==============PLAYER BOARD=============='
+    puts "==============PLAYER BOARD=============="
     puts @player_board.render(true)
 
-    puts 'Enter the coordinate for your shot:'
+    puts "Enter the coordinate for your shot:"
     player_shot = gets.chomp
     while @computer_board.valid_coordinate?(player_shot) == false
-      puts 'Please enter a valid coordinate:'
+      puts "Please enter a valid coordinate:"
       player_shot = gets.chomp
     end
     @computer_board.cells[player_shot].fire_upon
-    @player_board.cells['D1'].fire_upon
-    @player_board.cells['A2'].fire_upon
-    @player_board.cells['C3'].fire_upon
+    @player_board.cells["D1"].fire_upon
+    @player_board.cells["A2"].fire_upon
+    @player_board.cells["C3"].fire_upon
     possible_shots = []
     @player_board.cells.keys.map do |coordinate|
       if @player_board.cells[coordinate].fired_upon? == false
         possible_shots << coordinate
-      else
-
       end
     end
-    require "pry"; binding.pry
+
     computer_shot = possible_shots.sample
     @player_board.cells[computer_shot].fire_upon
 
     results(player_shot, computer_shot)
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
     [player_shot, computer_shot ]
   end
 

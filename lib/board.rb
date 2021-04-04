@@ -1,4 +1,4 @@
-require 'pry'
+require "pry"
 
 class Board
   attr_reader :cells
@@ -29,26 +29,20 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
+
     coordinate_test_array = coordinate_array
-    truth_array = overlap(coordinate_test_array)
-    ship.length == coordinate_test_array.count
-    known_array = Array.new(coordinate_test_array.count){ |i| i + 1 }
 
     string_array_alpha = coordinate_seperator(coordinate_test_array, 0)
-    number_array_alpha = convert_string_array(string_array_alpha)
-    normal_array_alpha = normalize_array(number_array_alpha)
 
     string_array_numeric = coordinate_seperator(coordinate_test_array, 1)
-    number_array_numeric = convert_string_array(string_array_numeric)
-    normal_array_numeric = normalize_array(number_array_numeric)
 
-    if normal_array_alpha.uniq.count != 1 && normal_array_numeric.uniq.count != 1
+    if string_array_alpha.uniq.count != 1 && string_array_numeric.uniq.count != 1
       false
-    elsif normal_array_alpha != known_array && normal_array_numeric != known_array
+    elsif !("A".."D").each_cons(ship.length).include?(string_array_alpha) && !("1".."4").each_cons(ship.length).include?(string_array_numeric)
       false
     elsif ship.length != coordinate_test_array.count
       false
-    elsif truth_array.include?(false)
+    elsif !overlap?(coordinate_test_array)
       false
     else
       true
@@ -62,7 +56,7 @@ class Board
   end
 
   def render(optional = false)
-    "  1 2 3 4 \nA #{@cells['A1'].render(optional)} #{@cells['A2'].render(optional)} #{@cells['A3'].render(optional)} #{@cells['A4'].render(optional)} \nB #{@cells['B1'].render(optional)} #{@cells['B2'].render(optional)} #{@cells['B3'].render(optional)} #{@cells['B4'].render(optional)} \nC #{@cells['C1'].render(optional)} #{@cells['C2'].render(optional)} #{@cells['C3'].render(optional)} #{@cells['C4'].render(optional)} \nD #{@cells['D1'].render(optional)} #{@cells['D2'].render(optional)} #{@cells['D3'].render(optional)} #{@cells['D4'].render(optional)} \n"
+    "  1 2 3 4 \nA #{@cells["A1"].render(optional)} #{@cells["A2"].render(optional)} #{@cells["A3"].render(optional)} #{@cells["A4"].render(optional)} \nB #{@cells["B1"].render(optional)} #{@cells["B2"].render(optional)} #{@cells["B3"].render(optional)} #{@cells["B4"].render(optional)} \nC #{@cells["C1"].render(optional)} #{@cells["C2"].render(optional)} #{@cells["C3"].render(optional)} #{@cells["C4"].render(optional)} \nD #{@cells["D1"].render(optional)} #{@cells["D2"].render(optional)} #{@cells["D3"].render(optional)} #{@cells["D4"].render(optional)} \n"
   end
 
   def coordinate_seperator(coordinate_combined, index)
@@ -84,22 +78,22 @@ class Board
   def convert_string_array(passed_array)
     converted_characters = []
     passed_array.each do |character|
-      if character == 'A' || character == '1'
+      if character == "A" || character == "1"
         converted_characters.push(1)
-      elsif character == 'B' || character =='2'
+      elsif character == "B" || character =="2"
         converted_characters.push(2)
-      elsif character == 'C' || character == '3'
+      elsif character == "C" || character == "3"
         converted_characters.push(3)
-      elsif character == 'D' || character == '4'
+      elsif character == "D" || character == "4"
         converted_characters.push(4)
       end
     end
     converted_characters
   end
 
-  def overlap(coordinate_array_overlap)
-    coordinate_array_overlap.map do |coordinate_test_truthy|
-      @cells[coordinate_test_truthy].empty?
+  def overlap?(coordinate_array_overlap)
+    coordinate_array_overlap.all? do |coordinate_test_truthy|
+      @cells[coordinate_test_truthy].empty? == true
     end
   end
 end
