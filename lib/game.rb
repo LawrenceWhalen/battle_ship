@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/board'
 require './lib/cell'
+require './lib/turn'
 
 class Game
   attr_reader :computer_submarine,
@@ -10,7 +11,20 @@ class Game
               :player_cruiser,
               :player_board
 
-  def start
+
+
+    def initialize
+      @computer_submarine = Ship.new('Submarine', 2)
+      @computer_cruiser = Ship.new('Cruiser', 3)
+      @computer_board = Board.new
+
+      @player_submarine = Ship.new('Submarine', 2)
+      @player_cruiser = Ship.new('Cruiser', 3)
+      @player_board = Board.new
+    end
+
+
+    def start
     puts "Welcome to BATTLESHIP"
     puts "Enter p to play. Enter q to quit."
 
@@ -27,19 +41,15 @@ class Game
     end
   end
 
-  def initialize
-    @computer_submarine = Ship.new('Submarine', 2)
-    @computer_cruiser = Ship.new('Cruiser', 3)
-    @computer_board = Board.new
-
-    @player_submarine = Ship.new('Submarine', 2)
-    @player_cruiser = Ship.new('Cruiser', 3)
-    @player_board = Board.new
-  end
-
   def game_setup
     computer_ship_placement
     player_ship_placement
+    take_turn
+  end
+
+  def take_turn
+    turn = Turn.new(@player_board, @computer_board)
+    turn_shots_taken = turn.start_turn
   end
 
   def player_ship_placement
@@ -71,25 +81,25 @@ class Game
     gets.chomp
   end
 
-  def computer_ship_coordinate(ship)
-     ships_arrays = []
-     final_array = []
-     die_roll = rand(1..2)
-     if die_roll == 1
-       (65..68).each_cons(ship.length) {|array| ships_arrays.push(array)}
-       collum = rand(1..4)
-       row = ships_arrays.sample
-       final_array = row.map do |char|
-         char.chr + collum.to_s
-       end
-     else
-      (1..4).each_cons(ship.length) {|array| ships_arrays.push(array)}
+  def computer_ship_coordinate(ship_to_place)
+    ships_arrays = []
+    final_array = []
+    die_roll = rand(1..2)
+    if die_roll == 1
+      (65..68).each_cons(ship_to_place.length) {|array| ships_arrays.push(array)}
+      collum = rand(1..4)
+      row = ships_arrays.sample
+      final_array = row.map do |char|
+      char.chr + collum.to_s
+      end
+    else
+      (1..4).each_cons(ship_to_place.length) {|array| ships_arrays.push(array)}
       collum = rand(65..68)
       row = ships_arrays.sample
       final_array = row.map do |char|
         collum.chr + char.to_s
       end
-     end
+    end
   end
 
   def computer_ship_placement

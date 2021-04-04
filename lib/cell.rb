@@ -36,6 +36,10 @@ class Cell
     end
   end
 
+  def ship_sunk?
+    @ship.sunk?
+  end
+
   # render marks a cell with a string based on the situation
   def render(optional = false)
     # returns . string if it wasnt shot at and with a default optional
