@@ -1,7 +1,7 @@
 require "./lib/ship"
 require "./lib/cell"
 
-RSpec.describe do
+RSpec.describe "Cell" do
   describe "#initialize" do
     it "creates instance of Cell" do
       cell = Cell.new("A1")

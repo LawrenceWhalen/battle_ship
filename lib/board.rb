@@ -33,7 +33,6 @@ class Board
     coordinate_test_array = coordinate_array
 
     string_array_alpha = coordinate_seperator(coordinate_test_array, 0)
-
     string_array_numeric = coordinate_seperator(coordinate_test_array, 1)
 
     if string_array_alpha.uniq.count != 1 && string_array_numeric.uniq.count != 1

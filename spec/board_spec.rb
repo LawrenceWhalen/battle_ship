@@ -1,7 +1,7 @@
 require "./lib/ship"
 require "./lib/cell"
 
-RSpec.describe do
+RSpec.describe "Board" do
   describe "#initialize" do
     it "creates cells on a board" do
       board = Board.new
