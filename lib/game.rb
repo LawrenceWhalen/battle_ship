@@ -44,12 +44,61 @@ class Game
   def game_setup
     computer_ship_placement
     player_ship_placement
-    take_turn
+
+    turn_loop
+  end
+
+  def turn_loop
+    until player_sunk? || computer_sunk?
+      take_turn
+    end
+    if player_sunk? && computer_sunk?
+      puts "It's a tie!"
+    elsif computer_sunk?
+      puts "You win!!!"
+    else
+      puts "You lose"
+    end
+  end
+
+
+def score_board(shots_we_took)
+  puts "=============COMPUTER BOARD============="
+  puts @computer_board.render
+  puts "==============PLAYER BOARD=============="
+  puts @player_board.render(true)
+  results_of_shots(shots_we_took[0], shots_we_took[1])
+end
+
+def shot_result(board_shot_at, shot_taken)
+  if board_shot_at.cells[shot_taken].ship == nil
+    "miss."
+  elsif board_shot_at.cells[shot_taken].ship_sunk?
+    "hit, and sunk the ship!"
+  else
+    "hit!"
+  end
+end
+
+def results_of_shots(player_shot, computer_shot)
+  puts "Your shot on #{player_shot} was a #{shot_result(@computer_board, player_shot)}"
+  puts "My shot on #{computer_shot} was a #{shot_result(@player_board, computer_shot)}"
+end
+
+  def player_sunk?
+    ((@player_cruiser.sunk?) && (@player_submarine.sunk?))
+  end
+
+  def computer_sunk?
+    ((@computer_cruiser.sunk?) && (@computer_submarine.sunk?))
   end
 
   def take_turn
     turn = Turn.new(@player_board, @computer_board)
     turn_shots_taken = turn.start_turn
+    @computer_board.cells[turn_shots_taken[0]].fire_upon
+    @player_board.cells[turn_shots_taken[1]].fire_upon
+    score_board(turn_shots_taken)
   end
 
   def player_ship_placement
@@ -69,7 +118,7 @@ class Game
     puts "Enter the squares for the Submarine (2 spaces):"
     player_submarine_input = input.split(" ").to_a
     while @player_board.valid_placement?(@player_submarine, player_submarine_input) == false
-      puts "ERROR: Enter the squares for the Cruiser (3 spaces):"
+      puts "ERROR: Enter the squares for the Submarine (2 spaces):"
       puts @player_board.render(true)
       player_submarine_input = input.split(" ").to_a
     end

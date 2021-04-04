@@ -49,9 +49,9 @@ class Cell
       "."
     elsif @fired_on == false && @ship != nil && optional == true
       "S"
-    elsif @fired_on == true && @ship != nil && @ship.sunk? == false
+    elsif @fired_on == true && @ship != nil && !@ship.sunk?
       "H"
-    elsif @fired_on == true && @ship != nil && @ship.sunk? == true
+    elsif @fired_on == true && @ship != nil && @ship.sunk?
       "X"
     end
   end
