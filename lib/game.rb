@@ -106,24 +106,37 @@ class Game
     puts "The Cruiser is three units long and the Submarine is two units long."
     puts @player_board.render(true)
     puts "Enter the squares for the Cruiser (3 spaces):"
-    player_cruiser_input = input.split(" ").to_a
-    while @player_board.valid_placement?(@player_cruiser, player_cruiser_input) == false
-      puts "ERROR: Enter the squares for the Cruiser (3 spaces):"
-      puts @player_board.render(true)
-      player_cruiser_input = input.split(" ").to_a
-    end
+    player_cruiser_input = placement_prompt(@player_cruiser)
+    # player_cruiser_input = input.split(" ").to_a
+    # while @player_board.valid_placement?(@player_cruiser, player_cruiser_input) == false
+    #   puts "ERROR: Enter the squares for the Cruiser (3 spaces):"
+    #   puts @player_board.render(true)
+    #   player_cruiser_input = input.split(" ").to_a
+    # end
     @player_board.place(@player_cruiser, player_cruiser_input)
     puts @player_board.render(true)
     puts "Enter the squares for the Submarine (2 spaces):"
-    player_submarine_input = input.split(" ").to_a
-    while @player_board.valid_placement?(@player_submarine, player_submarine_input) == false
-      puts "ERROR: Enter the squares for the Submarine (2 spaces):"
-      puts @player_board.render(true)
-      player_submarine_input = input.split(" ").to_a
-    end
+    player_submarine_input = placement_prompt(@player_submarine)
+    # player_submarine_input = input.split(" ").to_a
+    # while @player_board.valid_placement?(@player_submarine, player_submarine_input) == false
+    #   puts "ERROR: Enter the squares for the Submarine (2 spaces):"
+    #   puts @player_board.render(true)
+    #   player_submarine_input = input.split(" ").to_a
+    # end
     @player_board.place(@player_submarine, player_submarine_input)
     puts @player_board.render(true)
   end
+
+  def placement_prompt
+    player_placement_input = input.split(" ").to_a
+    while @player_board.valid_placement?(player_ship, player_placement_input) == false
+      puts "ERROR: Enter the squares for the #{player_ship.name} (#{player_ship.length} spaces):"
+      puts @player_board.render(true)
+      player_placement_input = input.split(" ").to_a
+    end
+    player_placement_input
+  end
+
 
   def input
     gets.chomp
@@ -158,9 +171,8 @@ class Game
     (range_1).each_cons(ship_to_place.length) do |array|
       ships_arrays.push(array)
     end
-    require "pry"; binding.pry
-    second_pass = rand(range_2)
     first_pass = ships_arrays.sample
+    second_pass = rand(range_2)
     final_array = first_pass.map do |char|
       if die_roll_pass == 1
         "#{char.chr}#{second_pass.to_i}"
