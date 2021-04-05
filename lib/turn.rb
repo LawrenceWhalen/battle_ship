@@ -28,14 +28,14 @@ class Turn
       end
     end
 
-    possible_shots = []
-    @player_board_turn.cells.keys.map do |coordinate|
-      if @player_board_turn.cells[coordinate].fired_upon? == false
-        possible_shots << coordinate
-      end
-    end
-
-    computer_shot = possible_shots.sample
-    [player_shot, computer_shot]
+    # possible_shots = []
+    # @player_board_turn.cells.keys.map do |coordinate|
+    #   if @player_board_turn.cells[coordinate].fired_upon? == false
+    #     possible_shots << coordinate
+    #   end
+    # end
+    #
+    # computer_shot = possible_shots.sample
+    player_shot
   end
 end

@@ -2,6 +2,7 @@ require "./lib/ship"
 require "./lib/board"
 require "./lib/cell"
 require "./lib/turn"
+require "./lib/computer_ai"
 
 class Game
   attr_reader :computer_submarine,
@@ -9,7 +10,8 @@ class Game
               :computer_board,
               :player_submarine,
               :player_cruiser,
-              :player_board
+              :player_board,
+              :firing_ai
 
 
 
@@ -21,6 +23,8 @@ class Game
       @player_submarine = Ship.new("Submarine", 2)
       @player_cruiser = Ship.new("Cruiser", 3)
       @player_board = Board.new
+
+      @firing_ai = ComputerAi.new
     end
 
 
@@ -44,7 +48,6 @@ class Game
   def game_setup
     computer_ship_placement
     player_ship_placement
-
     turn_loop
   end
 
@@ -61,29 +64,47 @@ class Game
     end
   end
 
-
-def score_board(shots_we_took)
-  puts "=============COMPUTER BOARD============="
-  puts @computer_board.render
-  puts "==============PLAYER BOARD=============="
-  puts @player_board.render(true)
-  results_of_shots(shots_we_took[0], shots_we_took[1])
-end
-
-def shot_result(board_shot_at, shot_taken)
-  if board_shot_at.cells[shot_taken].ship == nil
-    "miss."
-  elsif board_shot_at.cells[shot_taken].ship_sunk?
-    "hit, and sunk the ship!"
-  else
-    "hit!"
+  def take_turn
+    turn = Turn.new(@player_board, @computer_board)
+    player_shot_taken = turn.start_turn
+    @computer_board.cells[player_shot_taken].fire_upon
+    computer_shot_taken = computer_ai.take_the_shot
+    @player_board.cells[computer_shot_taken].fire_upon
+    turn_shots_taken = [player_shot_taken, computer_shot_taken]
+    score_board(turn_shots_taken)
   end
-end
 
-def results_of_shots(player_shot, computer_shot)
-  puts "Your shot on #{player_shot} was a #{shot_result(@computer_board, player_shot)}"
-  puts "My shot on #{computer_shot} was a #{shot_result(@player_board, computer_shot)}"
-end
+  def score_board(shots_we_took)
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
+    results_of_shots(shots_we_took[0], shots_we_took[1])
+  end
+
+  def shot_result(board_shot_at, shot_taken, comp? = false)
+    if board_shot_at.cells[shot_taken].ship == nil
+      if comp? = true
+        computer_ai.shot_was_miss(shot_taken)
+      end
+      "miss."
+    elsif board_shot_at.cells[shot_taken].ship_sunk?
+      if comp? = true
+        computer_ai.shot_was_sunk(shot_taken)
+      end
+      "hit, and sunk the ship!"
+    else
+      if comp? = true
+        computer_ai.shot_was_hit(shot_taken)
+      end
+      "hit!"
+    end
+  end
+
+  def results_of_shots(player_shot, computer_shot)
+    puts "Your shot on #{player_shot} was a #{shot_result(@computer_board, player_shot)}"
+    puts "My shot on #{computer_shot} was a #{shot_result(@player_board, computer_shot, true)}"
+  end
 
   def player_sunk?
     ((@player_cruiser.sunk?) && (@player_submarine.sunk?))
@@ -91,14 +112,6 @@ end
 
   def computer_sunk?
     ((@computer_cruiser.sunk?) && (@computer_submarine.sunk?))
-  end
-
-  def take_turn
-    turn = Turn.new(@player_board, @computer_board)
-    turn_shots_taken = turn.start_turn
-    @computer_board.cells[turn_shots_taken[0]].fire_upon
-    @player_board.cells[turn_shots_taken[1]].fire_upon
-    score_board(turn_shots_taken)
   end
 
   def player_ship_placement
