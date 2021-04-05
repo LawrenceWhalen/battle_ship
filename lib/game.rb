@@ -127,7 +127,7 @@ class Game
     puts @player_board.render(true)
   end
 
-  def placement_prompt
+  def placement_prompt(player_ship)
     player_placement_input = input.split(" ").to_a
     while @player_board.valid_placement?(player_ship, player_placement_input) == false
       puts "ERROR: Enter the squares for the #{player_ship.name} (#{player_ship.length} spaces):"

@@ -10,10 +10,10 @@ RSpec.describe "Turn" do
       game = Game.new
       turn = Turn.new(game.player_board, game.computer_board)
 
-      player_check = game.player_board == turn.player_board
-      computer_check = game.computer_board == turn.computer_board
+      player_check = (game.player_board == turn.player_board_turn)
+      computer_check = (game.computer_board == turn.computer_board_turn)
 
-      actual = player_check == computer_check
+      actual = (player_check == computer_check)
       expect(actual).to eq(true)
     end
   end

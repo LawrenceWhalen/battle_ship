@@ -27,6 +27,7 @@ class Turn
     #     player_choice_valid = true
     #   end
     # end
+    
     player_shot = player_shot_loop
 
     # possible_shots = []
@@ -38,7 +39,6 @@ class Turn
     # computer_shot = possible_shots.sample
 
     computer_shot = computer_shot_loop
-
 
     [player_shot, computer_shot]
   end
@@ -55,9 +55,9 @@ class Turn
         player_shot_attempt = gets.chomp
       else
         player_choice_valid = true
-        player_shot_attempt
       end
     end
+    player_shot_attempt
   end
 
   def computer_shot_loop
