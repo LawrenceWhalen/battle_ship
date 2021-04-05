@@ -44,7 +44,6 @@ class Game
   def game_setup
     computer_ship_placement
     player_ship_placement
-
     turn_loop
   end
 
@@ -62,28 +61,28 @@ class Game
   end
 
 
-def score_board(shots_we_took)
-  puts "=============COMPUTER BOARD============="
-  puts @computer_board.render
-  puts "==============PLAYER BOARD=============="
-  puts @player_board.render(true)
-  results_of_shots(shots_we_took[0], shots_we_took[1])
-end
-
-def shot_result(board_shot_at, shot_taken)
-  if board_shot_at.cells[shot_taken].ship == nil
-    "miss."
-  elsif board_shot_at.cells[shot_taken].ship_sunk?
-    "hit, and sunk the ship!"
-  else
-    "hit!"
+  def score_board(shots_we_took)
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
+    results_of_shots(shots_we_took[0], shots_we_took[1])
   end
-end
 
-def results_of_shots(player_shot, computer_shot)
-  puts "Your shot on #{player_shot} was a #{shot_result(@computer_board, player_shot)}"
-  puts "My shot on #{computer_shot} was a #{shot_result(@player_board, computer_shot)}"
-end
+  def shot_result(board_shot_at, shot_taken)
+    if board_shot_at.cells[shot_taken].ship == nil
+      "miss."
+    elsif board_shot_at.cells[shot_taken].ship_sunk?
+      "hit, and sunk the ship!"
+    else
+      "hit!"
+    end
+  end
+
+  def results_of_shots(player_shot, computer_shot)
+    puts "Your shot on #{player_shot} was a #{shot_result(@computer_board, player_shot)}"
+    puts "My shot on #{computer_shot} was a #{shot_result(@player_board, computer_shot)}"
+  end
 
   def player_sunk?
     ((@player_cruiser.sunk?) && (@player_submarine.sunk?))
@@ -130,27 +129,6 @@ end
     gets.chomp
   end
 
-  def computer_ship_coordinate(ship_to_place)
-    ships_arrays = []
-    final_array = []
-    die_roll = rand(1..2)
-    if die_roll == 1
-      (65..68).each_cons(ship_to_place.length) {|array| ships_arrays.push(array)}
-      collum = rand(1..4)
-      row = ships_arrays.sample
-      final_array = row.map do |char|
-      char.chr + collum.to_s
-      end
-    else
-      (1..4).each_cons(ship_to_place.length) {|array| ships_arrays.push(array)}
-      collum = rand(65..68)
-      row = ships_arrays.sample
-      final_array = row.map do |char|
-        collum.chr + char.to_s
-      end
-    end
-  end
-
   def computer_ship_placement
     placement_array = computer_ship_coordinate(@computer_cruiser)
     @computer_board.place(@computer_cruiser, placement_array)
@@ -159,5 +137,36 @@ end
       submarine_placement_array = computer_ship_coordinate(@computer_submarine)
     end
     @computer_board.place(@computer_submarine, submarine_placement_array)
+  end
+
+
+  def computer_ship_coordinate(ship_to_place)
+    board_max = @computer_board.cells.keys.max.chars.first.ord
+    range_alpha = (65..board_max)
+    range_numeric = (1..(board_max - 64))
+    die_roll = rand(1..2)
+    if die_roll == 1
+      ship_placement_randomizer(ship_to_place, range_alpha, range_numeric, die_roll)
+    elsif die_roll == 2
+      ship_placement_randomizer(ship_to_place, range_numeric, range_alpha, die_roll)
+    end
+  end
+
+  def ship_placement_randomizer(ship_to_place, range_1, range_2, die_roll_pass)
+    ships_arrays = []
+    final_array = []
+    (range_1).each_cons(ship_to_place.length) do |array|
+      ships_arrays.push(array)
+    end
+    require "pry"; binding.pry
+    second_pass = rand(range_2)
+    first_pass = ships_arrays.sample
+    final_array = first_pass.map do |char|
+      if die_roll_pass == 1
+        "#{char.chr}#{second_pass.to_i}"
+      else die_roll_pass == 2
+        "#{second_pass.chr}#{char.to_i}"
+      end
+    end
   end
 end
