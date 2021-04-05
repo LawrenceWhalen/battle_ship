@@ -28,23 +28,29 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
-  def valid_placement?(ship, coordinate_array)
-
-    coordinate_test_array = coordinate_array
+  def valid_placement?(ship, coordinate_test_array)
 
     string_array_alpha = coordinate_seperator(coordinate_test_array, 0)
     string_array_numeric = coordinate_seperator(coordinate_test_array, 1)
+    character_to_integer_array = convert_string_to_integer(string_array_alpha, "character")
+    number_to_integer_array = convert_string_to_integer(string_array_numeric, "number")
 
-    if string_array_alpha.uniq.count != 1 && string_array_numeric.uniq.count != 1
+    if string_array_alpha.uniq.length != 1 && string_array_numeric.uniq.length != 1
       false
-    elsif !("A".."D").each_cons(ship.length).include?(string_array_alpha) && !("1".."4").each_cons(ship.length).include?(string_array_numeric)
+    elsif !consecutive_test_valid(character_to_integer_array) && !consecutive_test_valid(number_to_integer_array)
       false
-    elsif ship.length != coordinate_test_array.count
+    elsif ship.length != coordinate_test_array.length
       false
     elsif !overlap?(coordinate_test_array)
       false
     else
       true
+    end
+  end
+
+  def consecutive_test_valid(string)
+    string.each_cons(2).all? do |a|
+      a[1] - a[0] == 1
     end
   end
 
@@ -67,32 +73,21 @@ class Board
     coordinate_seperated
   end
 
-  def normalize_array(array_normalize)
-    offset = array_normalize[0] - 1
-    offset_array_alpha = array_normalize.map do |number|
-      number - offset
-    end
-  end
-
-  def convert_string_array(passed_array)
-    converted_characters = []
-    passed_array.each do |character|
-      if character == "A" || character == "1"
-        converted_characters.push(1)
-      elsif character == "B" || character =="2"
-        converted_characters.push(2)
-      elsif character == "C" || character == "3"
-        converted_characters.push(3)
-      elsif character == "D" || character == "4"
-        converted_characters.push(4)
+  def convert_string_to_integer(passed_array, type)
+    if type == "character"
+      passed_array.map do |character|
+        character.ord
+      end
+    else
+      passed_array.map do |character|
+        character.to_i
       end
     end
-    converted_characters
   end
 
   def overlap?(coordinate_array_overlap)
     coordinate_array_overlap.all? do |coordinate_test_truthy|
-      @cells[coordinate_test_truthy].empty? == true
+      @cells[coordinate_test_truthy].empty?
     end
   end
 end
