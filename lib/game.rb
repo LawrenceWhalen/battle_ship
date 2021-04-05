@@ -58,6 +58,7 @@ class Game
     else
       puts "You lose"
     end
+    restart
   end
 
 
@@ -171,6 +172,7 @@ class Game
     (range_1).each_cons(ship_to_place.length) do |array|
       ships_arrays.push(array)
     end
+
     first_pass = ships_arrays.sample
     second_pass = rand(range_2)
     final_array = first_pass.map do |char|
@@ -180,5 +182,16 @@ class Game
         "#{second_pass.chr}#{char.to_i}"
       end
     end
+  end
+
+  def restart
+    @computer_submarine = Ship.new("Submarine", 2)
+    @computer_cruiser = Ship.new("Cruiser", 3)
+    @computer_board = Board.new
+
+    @player_submarine = Ship.new("Submarine", 2)
+    @player_cruiser = Ship.new("Cruiser", 3)
+    @player_board = Board.new
+    start
   end
 end
