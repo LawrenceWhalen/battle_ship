@@ -24,7 +24,7 @@ class Game
     end
 
 
-    def start
+  def start
     puts "Welcome to BATTLESHIP"
     puts "Enter p to play. Enter q to quit."
 
