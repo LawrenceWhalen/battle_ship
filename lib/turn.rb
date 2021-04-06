@@ -21,12 +21,14 @@ class Turn
         puts "Please enter a valid coordinate:"
         player_shot = gets.chomp
       elsif @computer_board_turn.cells[player_shot].fired_upon? == true
-        puts "Please choosee  a space you haven't fired at"
+        puts "Please choosee a space you haven't fired at"
         player_shot = gets.chomp
       else
         player_choice_valid = true
       end
     end
+    
+    player_shot = player_shot_loop
 
     possible_shots = []
     @player_board_turn.cells.keys.map do |coordinate|
@@ -34,11 +36,13 @@ class Turn
         possible_shots << coordinate
       end
     end
-
     computer_shot = possible_shots.sample
+
+    computer_shot = computer_shot_loop
+
     [player_shot, computer_shot]
   end
-
+  
   def score_board(shots_we_took, player_board_pass, computer_board_pass)
     @computer_board_turn = computer_board_pass
     @player_board_turn = player_board_pass
@@ -63,4 +67,5 @@ class Turn
     puts "Your shot on #{player_shot} was a #{shot_result(@computer_board_turn, player_shot)}"
     puts "My shot on #{computer_shot} was a #{shot_result(@player_board_turn, computer_shot)}"
   end
+
 end
