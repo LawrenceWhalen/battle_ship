@@ -27,8 +27,6 @@ class Turn
         player_choice_valid = true
       end
     end
-    
-    player_shot = player_shot_loop
 
     possible_shots = []
     @player_board_turn.cells.keys.map do |coordinate|
@@ -38,11 +36,9 @@ class Turn
     end
     computer_shot = possible_shots.sample
 
-    computer_shot = computer_shot_loop
-
     [player_shot, computer_shot]
   end
-  
+
   def score_board(shots_we_took, player_board_pass, computer_board_pass)
     @computer_board_turn = computer_board_pass
     @player_board_turn = player_board_pass

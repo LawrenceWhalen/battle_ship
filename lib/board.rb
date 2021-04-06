@@ -34,10 +34,10 @@ class Board
     string_array_numeric = coordinate_seperator(coordinate_test_array, 1)
     character_to_integer_array = convert_string_to_integer(string_array_alpha, "character")
     number_to_integer_array = convert_string_to_integer(string_array_numeric, "number")
-
-    if string_array_alpha.uniq.length != 1 && string_array_numeric.uniq.length != 1
+    
+    if character_to_integer_array.uniq.length != 1 && number_to_integer_array.uniq.length != 1
       false
-    elsif !consecutive_test_valid(character_to_integer_array) && !consecutive_test_valid(number_to_integer_array)
+    elsif !consecutive_test_valid?(character_to_integer_array) && !consecutive_test_valid?(number_to_integer_array)
       false
     elsif ship.length != coordinate_test_array.length
       false
@@ -46,22 +46,6 @@ class Board
     else
       true
     end
-  end
-
-  def consecutive_test_valid(string)
-    string.each_cons(2).all? do |a|
-      a[1] - a[0] == 1
-    end
-  end
-
-  def place(ship, place_cells)
-    if valid_placement?(ship, place_cells)
-      place_cells.map { |coordinate| @cells[coordinate].place_ship(ship) }
-    end
-  end
-
-  def render(optional = false)
-    "  1 2 3 4 \nA #{@cells["A1"].render(optional)} #{@cells["A2"].render(optional)} #{@cells["A3"].render(optional)} #{@cells["A4"].render(optional)} \nB #{@cells["B1"].render(optional)} #{@cells["B2"].render(optional)} #{@cells["B3"].render(optional)} #{@cells["B4"].render(optional)} \nC #{@cells["C1"].render(optional)} #{@cells["C2"].render(optional)} #{@cells["C3"].render(optional)} #{@cells["C4"].render(optional)} \nD #{@cells["D1"].render(optional)} #{@cells["D2"].render(optional)} #{@cells["D3"].render(optional)} #{@cells["D4"].render(optional)} \n"
   end
 
   def coordinate_seperator(coordinate_combined, index)
@@ -78,10 +62,16 @@ class Board
       passed_array.map do |character|
         character.ord
       end
-    else
+    elsif  type == "number"
       passed_array.map do |character|
         character.to_i
       end
+    end
+  end
+
+  def consecutive_test_valid?(string)
+    string.each_cons(2).all? do |a|
+      a[1] - a[0] == 1
     end
   end
 
@@ -89,5 +79,15 @@ class Board
     coordinate_array_overlap.all? do |coordinate_test_truthy|
       @cells[coordinate_test_truthy].empty?
     end
+  end
+
+  def place(ship, place_cells)
+    if valid_placement?(ship, place_cells)
+      place_cells.map { |coordinate| @cells[coordinate].place_ship(ship) }
+    end
+  end
+
+  def render(optional = false)
+    "  1 2 3 4 \nA #{@cells["A1"].render(optional)} #{@cells["A2"].render(optional)} #{@cells["A3"].render(optional)} #{@cells["A4"].render(optional)} \nB #{@cells["B1"].render(optional)} #{@cells["B2"].render(optional)} #{@cells["B3"].render(optional)} #{@cells["B4"].render(optional)} \nC #{@cells["C1"].render(optional)} #{@cells["C2"].render(optional)} #{@cells["C3"].render(optional)} #{@cells["C4"].render(optional)} \nD #{@cells["D1"].render(optional)} #{@cells["D2"].render(optional)} #{@cells["D3"].render(optional)} #{@cells["D4"].render(optional)} \n"
   end
 end
