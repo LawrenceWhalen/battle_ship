@@ -61,6 +61,30 @@ class Game
     restart
   end
 
+
+  def score_board(shots_we_took)
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
+    results_of_shots(shots_we_took[0], shots_we_took[1])
+  end
+
+  def shot_result(board_shot_at, shot_taken)
+    if board_shot_at.cells[shot_taken].ship == nil
+      "miss."
+    elsif board_shot_at.cells[shot_taken].ship_sunk?
+      "hit, and sunk the ship!"
+    else
+      "hit!"
+    end
+  end
+
+  def results_of_shots(player_shot, computer_shot)
+    puts "Your shot on #{player_shot} was a #{shot_result(@computer_board, player_shot)}"
+    puts "My shot on #{computer_shot} was a #{shot_result(@player_board, computer_shot)}"
+  end
+
   def player_sunk?
     ((@player_cruiser.sunk?) && (@player_submarine.sunk?))
   end
@@ -74,7 +98,7 @@ class Game
     turn_shots_taken = turn.start_turn
     @computer_board.cells[turn_shots_taken[0]].fire_upon
     @player_board.cells[turn_shots_taken[1]].fire_upon
-    turn.score_board(turn_shots_taken, @player_board, @computer_board)
+    score_board(turn_shots_taken)
   end
 
   def player_ship_placement
