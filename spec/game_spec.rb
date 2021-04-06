@@ -36,21 +36,4 @@ RSpec.describe "Game" do
       expect(actual.count(false)).to eq(5)
     end
   end
-  describe "#score_board" do
-    it "takes in coordinates to render board" do
-      game = Game.new
-
-      game.score_board(["A1", "B2"])
-
-      expect(game.player_board.render(true)).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
-    end
-    it "renders diffently if shots are taken" do
-      game = Game.new
-
-      game.score_board(["A1", "B2"])
-      game.player_board.cells["A1"].fire_upon
-
-      expect(game.player_board.render(true)).to eq("  1 2 3 4 \nA M . . . \nB . . . . \nC . . . . \nD . . . . \n")
-    end
-  end
 end
