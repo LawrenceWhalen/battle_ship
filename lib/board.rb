@@ -1,5 +1,3 @@
-require "pry"
-
 class Board
   attr_reader :cells
 
@@ -34,7 +32,7 @@ class Board
     string_array_numeric = coordinate_seperator(coordinate_test_array, 1)
     character_to_integer_array = convert_string_to_integer(string_array_alpha, "character")
     number_to_integer_array = convert_string_to_integer(string_array_numeric, "number")
-    
+
     if character_to_integer_array.uniq.length != 1 && number_to_integer_array.uniq.length != 1
       false
     elsif !consecutive_test_valid?(character_to_integer_array) && !consecutive_test_valid?(number_to_integer_array)
