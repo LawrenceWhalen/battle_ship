@@ -26,13 +26,14 @@ class Game
 
   def start
     puts "Welcome to BATTLESHIP"
-    puts "Enter p to play. Enter q to quit."
 
-    user_input = input
+    puts "Enter p to play. Enter q to quit."
+    puts "========================================"
+    user_input = input.downcase
 
     until (user_input == "p" || user_input == "q")
         puts "Enter p to play. Enter q to quit."
-        user_input = input
+        user_input = input.downcase
     end
     if user_input == "p"
       game_setup

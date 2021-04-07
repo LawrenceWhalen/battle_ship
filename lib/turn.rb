@@ -17,22 +17,22 @@ class Turn
   def start_turn
     line_long
     puts "Enter the coordinate for your shot:"
-    player_shot = gets.chomp
+    player_shot = gets.chomp.upcase
     player_choice_valid = false
     while player_choice_valid == false
-      if player_shot == "Cheater"
+      if player_shot == "CHEATER"
         @cheat = true
         display_boards_now
-        puts "cheats enabled, take your shot captain."
-        player_shot = gets.chomp
+        puts "cheats enabled, take your shot captain:"
+        player_shot = gets.chomp.upcase
       elsif @computer_board_turn.cells[player_shot].fired_upon? == true
         display_boards_now
-        puts "Please choose a space you haven't fired at"
-        player_shot = gets.chomp
+        puts "Please choose a space you haven't fired at:"
+        player_shot = gets.chomp.upcase
       elsif @computer_board_turn.valid_coordinate?(player_shot) == false
         display_boards_now
-        puts "Please enter a valid coordinate:"
-        player_shot = gets.chomp
+        puts "Please enter a space on the board:"
+        player_shot = gets.chomp.upcase
       else
         player_choice_valid = true
       end
