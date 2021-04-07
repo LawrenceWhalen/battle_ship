@@ -48,6 +48,11 @@ class Game
   end
 
   def turn_loop
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
+    puts "========================================"
     until player_sunk? || computer_sunk?
       take_turn
     end

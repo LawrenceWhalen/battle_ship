@@ -5,23 +5,33 @@ require "./lib/game"
 
 class Turn
   attr_reader :player_board_turn,
-              :computer_board_turn
+              :computer_board_turn,
+              :cheat
 
   def initialize(player_board, computer_board)
     @player_board_turn = player_board
     @computer_board_turn = computer_board
+    @cheat = false
   end
 
   def start_turn
+    line_long
     puts "Enter the coordinate for your shot:"
     player_shot = gets.chomp
     player_choice_valid = false
     while player_choice_valid == false
-      if  @computer_board_turn.valid_coordinate?(player_shot) == false
-        puts "Please enter a valid coordinate:"
+      if player_shot == "Cheater"
+        @cheat = true
+        display_boards_now
+        puts "cheats enabled, take your shot captain."
         player_shot = gets.chomp
       elsif @computer_board_turn.cells[player_shot].fired_upon? == true
-        puts "Please choosee a space you haven't fired at"
+        display_boards_now
+        puts "Please choose a space you haven't fired at"
+        player_shot = gets.chomp
+      elsif @computer_board_turn.valid_coordinate?(player_shot) == false
+        display_boards_now
+        puts "Please enter a valid coordinate:"
         player_shot = gets.chomp
       else
         player_choice_valid = true
@@ -42,10 +52,7 @@ class Turn
   def score_board(shots_we_took, player_board_pass, computer_board_pass)
     @computer_board_turn = computer_board_pass
     @player_board_turn = player_board_pass
-    puts "=============COMPUTER BOARD============="
-    puts @computer_board_turn.render
-    puts "==============PLAYER BOARD=============="
-    puts @player_board_turn.render(true)
+    display_boards_now
     results_of_shots(shots_we_took[0], shots_we_took[1])
   end
 
@@ -61,7 +68,19 @@ class Turn
 
   def results_of_shots(player_shot, computer_shot)
     puts "Your shot on #{player_shot} was a #{shot_result(@computer_board_turn, player_shot)}"
+    line_long
     puts "My shot on #{computer_shot} was a #{shot_result(@player_board_turn, computer_shot)}"
   end
 
+  def line_long
+    puts "========================================"
+  end
+
+  def display_boards_now
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board_turn.render(@cheat)
+    puts "==============PLAYER BOARD=============="
+    puts @player_board_turn.render(true)
+    line_long
+  end
 end
